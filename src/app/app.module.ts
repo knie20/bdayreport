@@ -2,7 +2,7 @@ import { BrowserModule } from '@angular/platform-browser';
 import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
-import { NgbModule, NgbPagination } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModule, NgbPaginationModule } from '@ng-bootstrap/ng-bootstrap';
 import { DatePipe } from '@angular/common';
 import { ReportService } from './services/report.service';
 
@@ -12,9 +12,13 @@ import { ReportService } from './services/report.service';
   ],
   imports: [
     BrowserModule,
-    NgbModule
+    NgbModule,
+    NgbPaginationModule
   ],
-  providers: [ReportService],
+  providers: [
+    DatePipe,
+    ReportService
+  ],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
