@@ -3,6 +3,7 @@ import { ReportService } from './services/report.service';
 
 import * as moment from 'moment';
 import { DatePipe } from '@angular/common';
+import { NgbDate, NgbTab } from '@ng-bootstrap/ng-bootstrap';
 
 enum SortOptions {
   ContactFullNameDesc = '{fullName:desc}',
@@ -35,6 +36,8 @@ export class AppComponent {
   today: moment.Moment;
   dateLowerBound: moment.Moment;
   dateUpperBound: moment.Moment;
+  ngbDateLowerBound: NgbDate;
+  ngbDateUpperBound: NgbDate;
 
   constructor(
     private reportService: ReportService,
@@ -47,9 +50,13 @@ export class AppComponent {
     };
     this.dateLowerBound = this.today.clone();
     this.dateUpperBound = this.today.clone().add(7, 'days');
+
+    this.ngbDateLowerBound = this.convertMomentToNgbDate(this.dateLowerBound);
+    this.ngbDateUpperBound = this.convertMomentToNgbDate(this.dateUpperBound);
+
     console.log(this.dateLowerBound);
 
-    this.filterContacts(this.dateLowerBound, this.dateUpperBound, 1, 1);
+    this.filterContacts(this.dateLowerBound, this.dateUpperBound, 1, 10);
   }
 
   filterContacts(
@@ -79,6 +86,12 @@ export class AppComponent {
       });
   }
 
+  submitRange(): void {
+    this.dateLowerBound = this.convertNgbDateToMoment(this.ngbDateLowerBound);
+    this.dateUpperBound = this.convertNgbDateToMoment(this.ngbDateUpperBound);
+    this.filterContacts(this.dateLowerBound, this.dateUpperBound, 1, 10)
+  }
+
   getRangeForToday(): {start: moment.Moment, end: moment.Moment} {
     return { start: this.today.startOf('day'), end: this.today.endOf('day') };
   }
@@ -93,5 +106,13 @@ export class AppComponent {
 
   calculateAge(age: number): number {
     return moment().diff(age, 'years');
+  }
+
+  convertNgbDateToMoment(ngbDate: NgbDate): moment.Moment {
+    return moment([ngbDate.year, ngbDate.month, ngbDate.day]);
+  }
+
+  convertMomentToNgbDate(mo: moment.Moment): NgbDate {
+    return NgbDate.from({ year: mo.year(), month: mo.month() + 1, day: mo.day() });
   }
 }

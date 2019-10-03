@@ -6,6 +6,7 @@ import { NgbModule, NgbPaginationModule, NgbDatepickerModule } from '@ng-bootstr
 import { DatePipe } from '@angular/common';
 import { ReportService } from './services/report.service';
 import { HttpClientModule } from '@angular/common/http';
+import { FormsModule } from '@angular/forms';
 
 @NgModule({
   declarations: [
@@ -13,6 +14,7 @@ import { HttpClientModule } from '@angular/common/http';
   ],
   imports: [
     BrowserModule,
+    FormsModule,
     NgbModule,
     NgbPaginationModule,
     NgbDatepickerModule,
