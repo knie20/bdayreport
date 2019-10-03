@@ -25,12 +25,12 @@ export class AppComponent {
     thisMonth: number
   };
   pagination: {
-    totalResults: number,
-    limit: number,
+    totalResults?: number,
+    pageSize: number,
     page: number,
-    returned: number,
-    totalPages: number,
-    sort: string
+    returned?: number,
+    totalPages?: number,
+    sort?: string
   };
   today: moment.Moment;
   dateLowerBound: moment.Moment;
@@ -41,12 +41,15 @@ export class AppComponent {
     private date: DatePipe
     ) {
     this.today = moment();
-    this.pagination.page = 1;
-    this.pagination.limit = 1;
-    this.dateLowerBound = this.today;
-    this.dateUpperBound = this.today.add(7, 'days');
+    this.pagination = {
+      page: 1,
+      pageSize: 1
+    };
+    this.dateLowerBound = this.today.clone();
+    this.dateUpperBound = this.today.clone().add(7, 'days');
+    console.log(this.dateLowerBound);
 
-    this.filterContacts(this.today, this.today.add(7, 'days'), 1, 1);
+    this.filterContacts(this.dateLowerBound, this.dateUpperBound, 1, 1);
   }
 
   filterContacts(
@@ -67,6 +70,25 @@ export class AppComponent {
     ).subscribe(obs => {
       console.log(obs);
     });
+  }
+
+  getCountforRange( range: { start: moment.Moment, end: moment.Moment} ) {
+    this.reportService.getReportCount(this.date.transform(range.start.toDate()), this.date.transform(range.end.toDate()))
+      .subscribe(obs => {
+
+      });
+  }
+
+  getRangeForToday(): {start: moment.Moment, end: moment.Moment} {
+    return { start: this.today.startOf('day'), end: this.today.endOf('day') };
+  }
+
+  getRangeForThisWeek(): {start: moment.Moment, end: moment.Moment} {
+    return { start: this.today.startOf('week'), end: this.today.endOf('week') };
+  }
+
+  getRangeForThisMonth(): {start: moment.Moment, end: moment.Moment} {
+    return { start: this.today.startOf('month'), end: this.today.endOf('month') };
   }
 
   calculateAge(age: number): number {

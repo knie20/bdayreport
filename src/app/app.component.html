@@ -6,14 +6,22 @@
       </div>
       <div class="row">
         <div class="col-6 bday-subtitle">
-          {{ dateLowerBound | date: 'MMMMM dd'}} - {{ dateUpperBound | date: 'MMMMM dd'}}  
-          <div class="bday-badge">{{}}</div>
+          {{ dateLowerBound.toDate() | date: 'MMMM dd'}} - {{ dateUpperBound.toDate() | date: 'MMMM dd'}}  <div class="bday-badge">{{12}}</div>
         </div>
-        <div class="col-6 bday-pagination"></div>
+        <div class="col-6 bday-pagination">
+          <ngb-pagination 
+            [collectionSize]="pagination.totalResults" 
+            [(page)]="pagination.page" 
+            [rotate]="true"
+            [boundaryLinks]="true" 
+            [directionLinks]="true"
+            (pageChange)="filterContacts(dateLowerBound, dateUpperBound, pagination.page, pagination.pageSize)"
+            ></ngb-pagination>
+        </div>
       </div>
       <div class="row bday-table">
         <table class="table table-striped">
-          <thead>
+          <thead class="bday-banner">
             <tr>
               <th scope="col">Contact</th>
               <th scope="col">Years</th>
@@ -33,6 +41,9 @@
       </div>
 
     </div>
-    <div class="col-3"></div>
+    <div class="col-3">
+      <div class="bday-banner">Date Range</div>
+
+    </div>
   </div>
 </div>
