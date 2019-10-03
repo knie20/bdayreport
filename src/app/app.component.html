@@ -5,7 +5,10 @@
         BIRTHDAY REPORT
       </div>
       <div class="row">
-        <div class="col-6 bday-subtitle"></div>
+        <div class="col-6 bday-subtitle">
+          {{ dateLowerBound | date: 'MMMMM dd'}} - {{ dateUpperBound | date: 'MMMMM dd'}}  
+          <div class="bday-badge">{{}}</div>
+        </div>
         <div class="col-6 bday-pagination"></div>
       </div>
       <div class="row bday-table">
@@ -21,7 +24,9 @@
             </thead>
             <tbody>
               <tr *ngFor="let contact of contacts">
-                
+                <th scope="row">{{ contact.fullName }}</th>
+                <td>{{ calculateAge(contact.birthday) }}</td>
+                <td>{{ contact.birthday | date: 'MMM, d' }}</td>
               </tr>
             </tbody>
         </table>

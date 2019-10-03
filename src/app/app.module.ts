@@ -3,6 +3,8 @@ import { NgModule } from '@angular/core';
 
 import { AppComponent } from './app.component';
 import { NgbModule, NgbPagination } from '@ng-bootstrap/ng-bootstrap';
+import { DatePipe } from '@angular/common';
+import { ReportService } from './services/report.service';
 
 @NgModule({
   declarations: [
@@ -10,10 +12,9 @@ import { NgbModule, NgbPagination } from '@ng-bootstrap/ng-bootstrap';
   ],
   imports: [
     BrowserModule,
-    NgbModule,
-    NgbPagination
+    NgbModule
   ],
-  providers: [],
+  providers: [ReportService],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
