@@ -18,7 +18,7 @@ enum SortOptions {
 })
 export class AppComponent {
   title = 'bdayreport';
-  contacts = [];
+  contacts: any[];
   badgeNumbers: {
     current: number,
     today: number,
@@ -44,6 +44,7 @@ export class AppComponent {
     private date: DatePipe
     ) {
     this.today = moment();
+    this.contacts = [];
     this.pagination = {
       page: 1,
       pageSize: 1
@@ -54,8 +55,17 @@ export class AppComponent {
     this.ngbDateLowerBound = this.convertMomentToNgbDate(this.dateLowerBound);
     this.ngbDateUpperBound = this.convertMomentToNgbDate(this.dateUpperBound);
 
-    console.log(this.dateLowerBound);
+    this.badgeNumbers = {
+      current: null,
+      today: null,
+      thisWeek: null,
+      thisMonth: null
+    };
 
+    this.getCountforRange({start: this.dateLowerBound, end: this.dateUpperBound }, val => this.badgeNumbers.current = val.count);
+    this.getCountforRange(this.getRangeForToday(), val => this.badgeNumbers.today = val.count);
+    this.getCountforRange(this.getRangeForThisWeek(), val => this.badgeNumbers.thisWeek = val.count);
+    this.getCountforRange(this.getRangeForThisMonth(), val => this.badgeNumbers.thisMonth = val.count);
     this.filterContacts(this.dateLowerBound, this.dateUpperBound, 1, 10);
   }
 
@@ -74,22 +84,36 @@ export class AppComponent {
         pageSize,
         sort: sort ? sort : ''
       }
-    ).subscribe(obs => {
-      console.log(obs);
+    ).subscribe({
+      next: value => {
+        this.contacts = value.data;
+        this.pagination = {
+          totalResults: value.paging.totalResults,
+          pageSize: value.paging.limit,
+          page: value.paging.page,
+          returned: value.paging.returned,
+          totalPages: value.paging.totalPages,
+        };
+      },
+      error: err => { console.log(err); }
     });
   }
 
-  getCountforRange( range: { start: moment.Moment, end: moment.Moment} ) {
-    this.reportService.getReportCount(this.date.transform(range.start.toDate()), this.date.transform(range.end.toDate()))
-      .subscribe(obs => {
-
+  getCountforRange( range: { start: moment.Moment, end: moment.Moment}, onNext: (value: any) => void) {
+    this.reportService.getReportCount(
+      this.date.transform(range.start.toDate(), 'YYYY-MM-dd'),
+      this.date.transform(range.end.toDate(), 'YYYY-MM-dd')
+      )
+      .subscribe({
+        next: onNext,
+        error: err => { console.log(err); }
       });
   }
 
   submitRange(): void {
     this.dateLowerBound = this.convertNgbDateToMoment(this.ngbDateLowerBound);
     this.dateUpperBound = this.convertNgbDateToMoment(this.ngbDateUpperBound);
-    this.filterContacts(this.dateLowerBound, this.dateUpperBound, 1, 10)
+    this.filterContacts(this.dateLowerBound, this.dateUpperBound, 1, 10);
   }
 
   getRangeForToday(): {start: moment.Moment, end: moment.Moment} {
@@ -113,6 +137,6 @@ export class AppComponent {
   }
 
   convertMomentToNgbDate(mo: moment.Moment): NgbDate {
-    return NgbDate.from({ year: mo.year(), month: mo.month() + 1, day: mo.day() });
+    return NgbDate.from({ year: mo.year(), month: mo.month() + 1, day: mo.date() });
   }
 }
