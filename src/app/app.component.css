@@ -1,0 +1,40 @@
+.bday-main {
+    margin: 10px 0 0 0;
+}
+
+.bday-title {
+    max-height: 38px;
+    margin: 0 0 10px 0;
+}
+
+.bday-title img {
+    display: inline-block; 
+    padding-right: 15px;
+}
+
+.bday-title h2 {
+    display: inline-block;
+    margin-bottom: 0px;
+    font-size: 38px;
+    font-family: Roboto, sans-serif;
+    color: #D5D5D5;
+    text-align: left;
+}
+
+.bday-subtitle {
+    padding: 0 0 10px 0;
+}
+
+.bday-pagination {
+    padding: 0 0 10px 0;
+}
+
+.bday-badge {
+    display: inline-block;
+    border-radius: 16px;
+    background-color: #288490;
+    color: white;
+    width: 48px;
+    height: 24px;
+    text-align: center;
+}

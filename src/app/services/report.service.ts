@@ -8,7 +8,7 @@ import { Observable } from 'rxjs';
 export class ReportService {
 
   private BASE_URL = 'https://api-sandbox.tomnx.com/';
-  private TOKEN = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTMsInVzZXJuYW1lIjoibW9ydGdhZ2UiLCJvcmdJZCI6NSwicm9sZUlkIjo4LCJncmFudF90eXBlIjoiYWNjZXNzX3Rva2VuIiwiaWF0IjoxNTcwMTE2NzMyLCJleHAiOjE1NzAyMDMxMzJ9.gnIyQKbwMmWcDGdfXjN3_3Hx8X4AkR7apvwoJBkm3DU';
+  private TOKEN = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MTMsInVzZXJuYW1lIjoibW9ydGdhZ2UiLCJvcmdJZCI6NSwicm9sZUlkIjo4LCJncmFudF90eXBlIjoiYWNjZXNzX3Rva2VuIiwiaWF0IjoxNTcwMjIxMjc4LCJleHAiOjE1NzAzMDc2Nzh9.Seh8LtHmUAoPH_UD1vivXZVmBWKpxt0spzGrYzBnYHQ';
   private REPORT_URL = 'api/corereports/birthday';
 
   constructor(private httpClient: HttpClient) { }
@@ -53,5 +53,5 @@ export class ReportService {
         }
       }
       );
-  }
+  } 
 }

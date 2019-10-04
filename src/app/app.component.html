@@ -2,19 +2,19 @@
   <div class="row">
     <div class="col-9">
       <div class="row bday-title">
-        BIRTHDAY REPORT
+        <img src="assets/birthday-cake.svg" alt=""> <h2>BIRTHDAY REPORT</h2>
       </div>
       <div class="row">
-        <div class="col-6 bday-subtitle">
+        <div class="col-12 col-lg-6 bday-subtitle">
           {{ dateLowerBound.toDate() | date: 'MMMM dd'}} - {{ dateUpperBound.toDate() | date: 'MMMM dd'}}
           <div class="bday-badge">{{ badgeNumbers.current }}</div>
         </div>
-        <div class="col-6 bday-pagination">
+        <div class="col-12 col-lg-6 bday-pagination">
           <ngb-pagination 
             [collectionSize]="pagination.totalResults" 
             [(page)]="pagination.page" 
             [rotate]="true"
-            [maxSize]="5"
+            [maxSize]="3"
             [boundaryLinks]="true" 
             [directionLinks]="true"
             (pageChange)="filterContacts(dateLowerBound, dateUpperBound, pagination.page, pagination.pageSize)"
