@@ -7,7 +7,7 @@
       <div class="row">
         <div class="col-12 col-lg-6 bday-subtitle">
           {{ dateLowerBound.toDate() | date: 'MMMM dd'}} - {{ dateUpperBound.toDate() | date: 'MMMM dd'}}
-          <div class="bday-badge">{{ badgeNumbers.current }}</div>
+          <div class="bday-badge" *ngIf="badgeNumbers.current">{{ badgeNumbers.current }}</div>
         </div>
         <div class="col-12 col-lg-6 bday-pagination">
           <ngb-pagination 
@@ -89,9 +89,9 @@
                 </button>
               </form>
             </div>
-            <button class="btn btn-primary bday-banner" (click)="filterContacts(getRangeForToday().start, getRangeForToday().end, pagination.page, pagination.pageSize)">Today <div class="bday-badge">{{ badgeNumbers.today }}</div></button>
-            <button class="btn btn-primary bday-banner" (click)="filterContacts(getRangeForThisWeek().start, getRangeForThisWeek().end, pagination.page, pagination.pageSize)">This Week <div class="bday-badge">{{ badgeNumbers.thisWeek }}</div></button>
-            <button class="btn btn-primary bday-banner" (click)="filterContacts(getRangeForThisMonth().start, getRangeForThisMonth().end, pagination.page, pagination.pageSize)">This Month<div class="bday-badge">{{ badgeNumbers.thisMonth }}</div></button>
+            <button class="btn btn-primary bday-banner" (click)="filterContacts(getRangeForToday().start, getRangeForToday().end, pagination.page, pagination.pageSize)">Today <div class="bday-badge" *ngIf="badgeNumbers.today">{{ badgeNumbers.today }}</div></button>
+            <button class="btn btn-primary bday-banner" (click)="filterContacts(getRangeForThisWeek().start, getRangeForThisWeek().end, pagination.page, pagination.pageSize)">This Week <div class="bday-badge" *ngIf="badgeNumbers.thisWeek">{{ badgeNumbers.thisWeek }}</div></button>
+            <button class="btn btn-primary bday-banner" (click)="filterContacts(getRangeForThisMonth().start, getRangeForThisMonth().end, pagination.page, pagination.pageSize)">This Month<div class="bday-badge" *ngIf="badgeNumbers.thisMonth">{{ badgeNumbers.thisMonth }}</div></button>
           </div>
         </div>
       </div>

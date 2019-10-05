@@ -5,6 +5,10 @@ import * as moment from 'moment';
 import { DatePipe } from '@angular/common';
 import { NgbDate, NgbTab } from '@ng-bootstrap/ng-bootstrap';
 
+import { parse } from 'json2csv';
+import { saveAs } from 'file-saver';
+
+
 enum SortOptions {
   ContactFullNameDesc = '{fullName:desc}',
   ContactFullNameAsc = '{fullName:asc}'
@@ -138,7 +142,7 @@ export class AppComponent {
   }
 
   convertNgbDateToMoment(ngbDate: NgbDate): moment.Moment {
-    return moment([ngbDate.year, ngbDate.month, ngbDate.day]);
+    return moment([ngbDate.year, ngbDate.month - 1, ngbDate.day]);
   }
 
   convertMomentToNgbDate(mo: moment.Moment): NgbDate {
@@ -146,6 +150,22 @@ export class AppComponent {
   }
 
   export(): void {
-    
+    this.reportService.getReportData(
+      this.date.transform(this.dateLowerBound.toDate(), 'YYYY-MM-dd'),
+      this.date.transform(this.dateUpperBound.toDate(), 'YYYY-MM-dd'),
+      {
+        page: 1,
+        pageSize: 10000,
+        sort: ''
+      }
+    ).subscribe({
+      next: value => {
+        const blob = new Blob([ JSON.stringify(value.data) ], {type: 'text/plain;charset=utf-8'});
+        saveAs(blob, 'export.txt');
+      },
+      error: err => {
+        console.log(err);
+      }
+    });
   }
 }
