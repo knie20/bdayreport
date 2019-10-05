@@ -1,8 +1,8 @@
-<div class="bday-main container">
+<div class="bday-main">
   <div class="row">
-    <div class="col-9">
+    <div class="col-12 col-lg-9">
       <div class="row bday-title">
-        <img src="assets/birthday-cake.svg" alt=""> <h2>BIRTHDAY REPORT</h2>
+        <img src="assets/birthday-cake.svg" alt="cake.png" class="d-none d-lg-inline-block"> <h2>BIRTHDAY REPORT</h2>
       </div>
       <div class="row">
         <div class="col-12 col-lg-6 bday-subtitle">
@@ -13,6 +13,7 @@
           <ngb-pagination 
             [collectionSize]="pagination.totalResults" 
             [(page)]="pagination.page" 
+            [(pageSize)]="pagination.pageSize"
             [rotate]="true"
             [maxSize]="3"
             [boundaryLinks]="true" 
@@ -32,7 +33,7 @@
               <th scope="col">User</th>
             </tr>
             </thead>
-            <tbody>
+            <tbody class="overflow-auto">
               <tr *ngFor="let contact of contacts">
                 <th scope="row">{{ contact.fullName }}</th>
                 <td>{{ contact.birthdayAge }}</td>
@@ -50,38 +51,50 @@
       </div>
 
     </div>
-    <div class="col-3">
-      <div class="bday-banner">Date Range</div>
-      <div class="bday-range-form">
-        <form>
-          <div class="form-group">
-            <label for="lower-dp">From:</label>
-            <div class="input-group">
-              <input class="form-control" placeholder="yyyy-mm-dd" name="lower-dp" [maxDate]="ngbDateUpperBound" [(ngModel)]="ngbDateLowerBound" ngbDatepicker #dl="ngbDatepicker">
-              <div class="input-group-append">
-                <button class="btn btn-outline-secondary" (click)="dl.toggle()" type="button">
-                  <img src="assets/calendar-icon.svg" style="width: 1.2rem; height: 1rem; cursor: pointer;"/>
-                </button>
-              </div>
-            </div>
-          </div>
-          <div class="form-group">
-            <label for="upper-dp">To:</label>
-            <div class="input-group">
-              <input class="form-control" placeholder="yyyy-mm-dd" name="upper-dp" [minDate]="ngbDateLowerBound" [(ngModel)]="ngbDateUpperBound" ngbDatepicker #du="ngbDatepicker">
-              <div class="input-group-append">
-                <button class="btn btn-outline-secondary" (click)="du.toggle()" type="button">
-                  <img src="assets/calendar-icon.svg" style="width: 1.2rem; height: 1rem; cursor: pointer;"/>
-                </button>
-              </div>
-            </div>
-          </div>
-          <button type="button" class="btn btn-outline-primary" (click)="submitRange()">
-            Filter
-          </button>
-        </form>
+    <div class="col-12 col-lg-3 rounded bday-side">
+      <div class="row col-12 bday-btn-group">
+        <div class="btn-group ">
+          <button type="button" class="btn btn-primary" (click)="export()"><img src="assets/export.svg" alt="">Export</button>
+          <button type="button" class="btn btn-primary" (click)="filterContacts(dateLowerBound, dateUpperBound, pagination.page, pagination.pageSize)"><img src="assets/refresh.svg" alt="">Refresh</button>
+        </div>
       </div>
-
+      <div class="row">
+        <div class="col-12 panel panel-default">
+          <div class="panel-body">
+            <div class="bday-banner top-rounded">Date Range</div>
+            <div class="bday-range-form">
+              <form>
+                <div class="form-group">
+                  <div class="input-group">
+                    <input class="form-control" placeholder="yyyy-mm-dd" name="lower-dp" [maxDate]="ngbDateUpperBound" [(ngModel)]="ngbDateLowerBound" ngbDatepicker #dl="ngbDatepicker">
+                    <div class="input-group-append">
+                      <button class="btn btn-outline-secondary" (click)="dl.toggle()" type="button">
+                        <img src="assets/calendar-icon.svg" style="width: 1.2rem; height: 1rem; cursor: pointer;"/>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                <div class="form-group">
+                  <div class="input-group">
+                    <input class="form-control" placeholder="yyyy-mm-dd" name="upper-dp" [minDate]="ngbDateLowerBound" [(ngModel)]="ngbDateUpperBound" ngbDatepicker #du="ngbDatepicker">
+                    <div class="input-group-append">
+                      <button class="btn btn-outline-secondary" (click)="du.toggle()" type="button">
+                        <img src="assets/calendar-icon.svg" style="width: 1.2rem; height: 1rem; cursor: pointer;"/>
+                      </button>
+                    </div>
+                  </div>
+                </div>
+                <button type="button" class="btn btn-primary" (click)="submitRange()">
+                  Filter
+                </button>
+              </form>
+            </div>
+            <button class="btn btn-primary bday-banner" (click)="filterContacts(getRangeForToday().start, getRangeForToday().end, pagination.page, pagination.pageSize)">Today <div class="bday-badge">{{ badgeNumbers.today }}</div></button>
+            <button class="btn btn-primary bday-banner" (click)="filterContacts(getRangeForThisWeek().start, getRangeForThisWeek().end, pagination.page, pagination.pageSize)">This Week <div class="bday-badge">{{ badgeNumbers.thisWeek }}</div></button>
+            <button class="btn btn-primary bday-banner" (click)="filterContacts(getRangeForThisMonth().start, getRangeForThisMonth().end, pagination.page, pagination.pageSize)">This Month<div class="bday-badge">{{ badgeNumbers.thisMonth }}</div></button>
+          </div>
+        </div>
+      </div>
     </div>
   </div>
 </div>

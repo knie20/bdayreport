@@ -1,5 +1,5 @@
 .bday-main {
-    margin: 10px 0 0 0;
+    margin: 10px 50px 0 50px;
 }
 
 .bday-title {
@@ -23,18 +23,113 @@
 
 .bday-subtitle {
     padding: 0 0 10px 0;
+    font-size: 24px;
 }
 
 .bday-pagination {
     padding: 0 0 10px 0;
 }
 
+ngb-pagination {
+    float: right;
+}
+
+ngb-pagination li .page-link {
+    color: white;
+    background-color: #182955;
+}
+
+.pagination li .page-link:hover {
+    color: white;
+    background-color: #283f79;
+}
+
+.btn-primary {
+    border: none;
+    background-color: #182955;
+}
+
+.btn-primary:hover {
+    background-color: #283f79;
+}
+
 .bday-badge {
     display: inline-block;
     border-radius: 16px;
     background-color: #288490;
+    font-size: 16px;
+    font-weight: 200;
     color: white;
-    width: 48px;
+    padding: 0 10px 0 10px;
     height: 24px;
     text-align: center;
+}
+
+.bday-table thead {
+    background-color: #182955;
+    color: white;
+}
+
+.bday-table table tr:first-child th:first-child {
+    border-top-left-radius: 15px;
+}
+
+.bday-table table tr:first-child th:last-child {
+    border-top-right-radius: 15px;
+}
+
+.bday-table table tr:last-child td:first-child {
+    border-bottom-left-radius: 15px;
+}
+
+.bday-table table tr:last-child td:last-child {
+    border-bottom-right-radius: 15px;
+}
+
+.bday-side {
+    margin-top: 48px;
+}
+
+.bday-btn-group {
+    margin: auto;
+}
+
+.bday-btn-group .btn-group {
+    width: 100%;
+}
+
+.bday-btn-group button {
+    padding: 7px 12px 7px 12px;
+}
+
+.panel {
+    margin-top: 26px;
+}
+
+.panel-body {
+    background-color: white;
+    width: 100%;
+}
+
+.panel .bday-banner{
+    font-weight: bold;
+    text-align: center;
+    padding-top: 12px;
+    padding-bottom: 12px;
+    color: white;
+    background-color: #182955;
+    width: 100%;
+}
+
+.panel .bday-banner:hover{
+    background-color: #283f79;
+}
+
+.panel .top-rounded {
+    border-top-right-radius: 15px;
+    border-top-left-radius: 15px;
+}
+
+.panel form {
+    padding: 10px;
 }

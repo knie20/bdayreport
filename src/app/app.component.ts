@@ -66,7 +66,7 @@ export class AppComponent {
     this.getCountforRange(this.getRangeForToday(), val => this.badgeNumbers.today = val.count);
     this.getCountforRange(this.getRangeForThisWeek(), val => this.badgeNumbers.thisWeek = val.count);
     this.getCountforRange(this.getRangeForThisMonth(), val => this.badgeNumbers.thisMonth = val.count);
-    this.filterContacts(this.dateLowerBound, this.dateUpperBound, 1, 10);
+    this.filterContacts(this.dateLowerBound, this.dateUpperBound, 1, 20);
   }
 
   filterContacts(
@@ -94,6 +94,11 @@ export class AppComponent {
           returned: value.paging.returned,
           totalPages: value.paging.totalPages,
         };
+
+        this.ngbDateLowerBound = this.convertMomentToNgbDate(dateLowerBound);
+        this.ngbDateUpperBound = this.convertMomentToNgbDate(dateUpperBound);
+        this.dateLowerBound = dateLowerBound;
+        this.dateUpperBound = dateUpperBound;
       },
       error: err => { console.log(err); }
     });
@@ -113,19 +118,19 @@ export class AppComponent {
   submitRange(): void {
     this.dateLowerBound = this.convertNgbDateToMoment(this.ngbDateLowerBound);
     this.dateUpperBound = this.convertNgbDateToMoment(this.ngbDateUpperBound);
-    this.filterContacts(this.dateLowerBound, this.dateUpperBound, 1, 10);
+    this.filterContacts(this.dateLowerBound, this.dateUpperBound, 1, 20);
   }
 
   getRangeForToday(): {start: moment.Moment, end: moment.Moment} {
-    return { start: this.today.startOf('day'), end: this.today.endOf('day') };
+    return { start: this.today.clone().startOf('day'), end: this.today.clone().endOf('day') };
   }
 
   getRangeForThisWeek(): {start: moment.Moment, end: moment.Moment} {
-    return { start: this.today.startOf('week'), end: this.today.endOf('week') };
+    return { start: this.today.clone().startOf('week'), end: this.today.clone().endOf('week') };
   }
 
   getRangeForThisMonth(): {start: moment.Moment, end: moment.Moment} {
-    return { start: this.today.startOf('month'), end: this.today.endOf('month') };
+    return { start: this.today.clone().startOf('month'), end: this.today.clone().endOf('month') };
   }
 
   calculateAge(age: number): number {
@@ -138,5 +143,9 @@ export class AppComponent {
 
   convertMomentToNgbDate(mo: moment.Moment): NgbDate {
     return NgbDate.from({ year: mo.year(), month: mo.month() + 1, day: mo.date() });
+  }
+
+  export(): void {
+    
   }
 }
