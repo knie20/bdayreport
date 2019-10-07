@@ -51,7 +51,7 @@ export class AppComponent {
     this.contacts = [];
     this.pagination = {
       page: 1,
-      pageSize: 1
+      pageSize: 10
     };
     this.dateLowerBound = this.today.clone();
     this.dateUpperBound = this.today.clone().add(7, 'days');
@@ -70,7 +70,7 @@ export class AppComponent {
     this.getCountforRange(this.getRangeForToday(), val => this.badgeNumbers.today = val.count);
     this.getCountforRange(this.getRangeForThisWeek(), val => this.badgeNumbers.thisWeek = val.count);
     this.getCountforRange(this.getRangeForThisMonth(), val => this.badgeNumbers.thisMonth = val.count);
-    this.filterContacts(this.dateLowerBound, this.dateUpperBound, 1, 20);
+    this.filterContacts(this.dateLowerBound, this.dateUpperBound, this.pagination.page, this.pagination.pageSize);
   }
 
   filterContacts(
@@ -124,7 +124,13 @@ export class AppComponent {
   submitRange(): void {
     this.dateLowerBound = this.convertNgbDateToMoment(this.ngbDateLowerBound);
     this.dateUpperBound = this.convertNgbDateToMoment(this.ngbDateUpperBound);
-    this.filterContacts(this.dateLowerBound, this.dateUpperBound, 1, 20);
+    this.filterContacts(this.dateLowerBound, this.dateUpperBound, this.pagination.page, this.pagination.pageSize);
+  }
+
+  setPageSize(pageSize: number): void {
+    this.pagination.pageSize = pageSize;
+    this.pagination.page = 1;
+    this.filterContacts(this.dateLowerBound, this.dateUpperBound, this.pagination.page, this.pagination.pageSize);
   }
 
   getRangeForToday(): {start: moment.Moment, end: moment.Moment} {

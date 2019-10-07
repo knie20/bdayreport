@@ -5,11 +5,21 @@
         <img src="assets/birthday-cake.svg" alt="cake.png" class="d-none d-lg-inline-block"> <h2>BIRTHDAY REPORT</h2>
       </div>
       <div class="row">
-        <div class="col-12 col-lg-6 bday-subtitle">
+        <div class="col-12 col-lg-5 bday-subtitle">
           {{ dateLowerBound.toDate() | date: 'MMMM dd'}} - {{ dateUpperBound.toDate() | date: 'MMMM dd'}}
           <div class="bday-badge" *ngIf="badgeNumbers.current">{{ badgeNumbers.current }}</div>
         </div>
-        <div class="col-12 col-lg-6 bday-pagination">
+        <div class="col-lg-2">
+          <div ngbDropdown class="d-inline-block">
+            <button class="btn btn-outline-primary" id="pageSizeDropdown" ngbDropdownToggle>Page Size: {{ pagination.pageSize }}</button>
+            <div ngbDropdownMenu aria-labelledby="pageSizeDropdown">
+              <button ngbDropdownItem (click)="setPageSize(10)">10</button>
+              <button ngbDropdownItem (click)="setPageSize(20)">20</button>
+              <button ngbDropdownItem (click)="setPageSize(50)">50</button>
+            </div>
+          </div>
+        </div>
+        <div class="col-12 col-lg-5 bday-pagination">
           <ngb-pagination 
             [collectionSize]="pagination.totalResults" 
             [(page)]="pagination.page" 
