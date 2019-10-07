@@ -103,6 +103,8 @@ export class AppComponent {
         this.ngbDateUpperBound = this.convertMomentToNgbDate(dateUpperBound);
         this.dateLowerBound = dateLowerBound;
         this.dateUpperBound = dateUpperBound;
+
+        this.badgeNumbers.current = value.paging.totalResults;
       },
       error: err => { console.log(err); }
     });
